@@ -1,0 +1,43 @@
+function mark_I(varargin)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%=============== MARK I: FINITE ELEMENT PROGRAM ================%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                               %
+%------- Purpose -----------------------------------------------%
+%  The present code is a  finite element program for nonlinear  %
+%  analysis.  In addition, this  software is  also  capable to  %
+%  perform Coupled Thermal-Hydro-Mechanical Analyses            %
+%                                                               %
+%------- Details -----------------------------------------------%
+%  Version: 1.0                                                 %
+%  Developer: Michael A. Maedo                                  %
+%  Last Update: 01-06-2015                                      %
+%  Creation Date: 01-06-2015                                    %
+%                                                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  clear all;
+  clc;
+
+  switch nargin
+    case 0  
+    case 1
+      [path_file,file,ext] = fileparts(varargin{1});
+      file = [file,ext];
+    case 2
+      path_file = varargin{1};
+      file = varargin{2};     
+    otherwise
+      error('Analysis: Incorrect number of arguments');
+   end
+  
+  if ~exist('file','var')&&~exist('path_file','var')
+      [file,pathfile] = uigetfile('*.m','Define calc file');
+  end
+  read_file = strtok(file,'.m');
+  eval(read_file);
+
+  p = fileparts(mfilename('fullpath'));
+  addpath(genpath(p));
+
+  nonlinear_analysis;
+end

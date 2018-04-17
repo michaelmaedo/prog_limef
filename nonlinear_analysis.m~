@@ -1,0 +1,10 @@
+function nonlinear_analysis()
+  for ielem = 1 : nelem
+
+% Extract local information from global
+    [iset, iconnec, ix] = extra_loca(ielem, connec);
+ 
+% Compute the stiffness of the element
+    Ke = eleme_stif(elset(iset), iconnec, ix);
+  end
+end
